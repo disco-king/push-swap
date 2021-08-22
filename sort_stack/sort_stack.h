@@ -1,3 +1,6 @@
+#ifndef SORT_STACK_H
+# define SORT_STACK_H
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -30,3 +33,5 @@ void px(t_list **, t_list **);
 
 void sort_three(t_list **);
 void get_val(t_list *, int *, int *);
+
+#endif

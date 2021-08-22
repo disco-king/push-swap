@@ -56,7 +56,7 @@ int lst_len(t_list *ptr)
 		return(0);
 	if (ptr->prev)
 	{
-		printf("len not the first list item\n");
+		ft_printf("len not the first list item\n");
 		return(-1);
 	}
 	i = 0;
