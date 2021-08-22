@@ -1,15 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-
-int ft_printf(const char *, ...);
-
-typedef struct	s_list
-{
-	int num;
-	int uninit;
-	struct s_list *next;
-	struct s_list *prev;
-}	t_list;
+#include "sort_stack.h"
 
 int	ft_atoi(const char *num)
 {
@@ -35,49 +24,6 @@ int	ft_atoi(const char *num)
 	if (sign)
 		return (-res);
 	return (res);
-}
-
-t_list	*ft_lstnew(int content)
-{
-	t_list *new;
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
-		return(NULL);
-	new->num = content;
-	new->uninit = 0;
-	new->next = NULL;
-	new->prev = NULL;
-	return(new);
-}
-
-void	ft_lstadd_back(t_list *lst, t_list *new)
-{
-	t_list *ptr = lst;
-	
-	while(ptr->next)
-		ptr = ptr->next;
-	ptr->next = new;
-	new->prev = ptr;
-}
-
-int lst_len(t_list *ptr)
-{
-	int i;
-
-	if (!ptr)
-		return(0);
-	if (ptr->prev)
-	{
-		printf("len not the first list item\n");
-		return(-1);
-	}
-	i = 0;
-	while(ptr && !ptr->uninit)
-	{
-		i++;
-		ptr = ptr->next;
-	}
-	return(i);
 }
 
 int *get_arr(char *nums, int count)
@@ -130,30 +76,6 @@ t_list *parce(char *nums, int **arr)
 	return(start);
 }
 
-t_list *print_list(t_list *ptr)
-{
-	if(!ptr)
-		ft_printf("list empty\n");
-	else if(!ptr->prev)
-	{
-		while(ptr->next)
-		{
-			ft_printf("way down %d\n", ptr->num);
-			ptr = ptr->next;
-		}
-		ft_printf("last one %d\n\n", ptr->num);
-	}
-	else if(!ptr->next)
-	{
-		while(ptr->prev)
-		{
-			ft_printf("way up   %d\n", ptr->num);
-			ptr = ptr->prev;
-		}
-		ft_printf("last one %d\n\n", ptr->num);
-	}
-	return(ptr);
-}
 
 void sort_arr(int *arr, int len)
 {
@@ -188,25 +110,88 @@ void print_arr(int *arr, int count)
 	ft_printf("\n");
 }
 
+void get_val(t_list *stack, int *max, int *min)
+{
+	int i;
+	int b;
+	int s;
+
+	*max = 0;
+	*min = *max;
+	b = stack->num;
+	s = b;
+	i = 1;
+	stack = stack->next;
+	while(stack)
+	{
+		if(b < stack->num)
+		{
+			b = stack->num;
+			*max = i;
+		}
+		if(s > stack->num)
+		{
+			s = stack->num;
+			*min = i;
+		}
+		i++;
+		stack = stack->next;
+	}
+}
+
+void sort_three(t_list **stack)
+{
+	int max;
+	int min;
+
+	get_val(*stack, &max, &min);
+	ft_printf("min %d\tmax %d\n", min, max);
+	if (min == 0)
+	{
+		if (max == 1)
+		{
+			sx(stack);
+			rx(stack);
+		}
+	}
+	else if (max == 0)
+	{
+		if (min == 2)
+		{
+			rx(stack);
+			sx(stack);
+		}
+		else
+			rx(stack);
+	}
+	else
+	{
+		if (max == 2)
+			sx(stack);
+		else
+			rrx(stack);
+	}
+}
+
 int main (int argc, char **argv)
 {
-	t_list *start;
+	t_list *st_a;
 	int *arr;
 	if (argc >= 2)
 	{
-		start = parce(argv[1], &arr);
+		st_a = parce(argv[1], &arr);
 	}
 	else
 	{
 		printf("giv args pls\n");
 		exit(0);
 	}
-	print_list(start);
-	int count = lst_len(start);
-	ft_printf("%d\n", count);
-	print_arr(arr, count);
-	sort_arr(arr, count);
-	print_arr(arr, count);
+	print_list(st_a);
+	int count = lst_len(st_a);
+	ft_printf("lst len %d\n", count);
+	if (count == 3)
+		sort_three(&st_a);
+	print_list(st_a);
 	while(1);
 	return(0);
 }
