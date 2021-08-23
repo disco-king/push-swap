@@ -145,7 +145,7 @@ int main (int argc, char **argv)
 {
 	t_list *st_a;
 	t_list *st_b;
-	t_data data;
+	t_data *data = (t_data*)malloc(sizeof(t_data *));
 	int *arr;
 
 	st_b = NULL;
@@ -160,13 +160,13 @@ int main (int argc, char **argv)
 	}
 	int count = lst_len(st_a);
 	sort_arr(arr, count);
-	init_data(&data, &st_a, arr);
-	if(data.len < 6)
+	init_data(data, &st_a, arr);
+	if(data->len < 6)
 	{
-		minimal(&st_a, &st_b, &data);
+		minimal(&st_a, &st_b, data);
 		print_list(st_a);
 	}
-	big_sort(&data, arr);
+	big_sort(data, arr);
 	// print_arr(arr, count);
 	// assign_index(st_a, arr);
 	// while (st_a)
