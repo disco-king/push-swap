@@ -110,88 +110,69 @@ void print_arr(int *arr, int count)
 	ft_printf("\n");
 }
 
-void get_val(t_list *stack, int *max, int *min)
+void assign_index(t_list *list, int *arr)
 {
-	int i;
-	int b;
-	int s;
+	int i = 0;
+	int len = lst_len(list);
 
-	*max = 0;
-	*min = *max;
-	b = stack->num;
-	s = b;
-	i = 1;
-	stack = stack->next;
-	while(stack)
+	while(list)
 	{
-		if(b < stack->num)
+		while (i < len)
 		{
-			b = stack->num;
-			*max = i;
+			if (arr[i] == list->num)
+			{
+				list->order = i+1;
+				i = 0;
+				break ;
+			}
+			i++;
 		}
-		if(s > stack->num)
-		{
-			s = stack->num;
-			*min = i;
-		}
-		i++;
-		stack = stack->next;
+		list = list->next;
 	}
 }
 
-void sort_three(t_list **stack)
+void init_data(t_data *data, t_list **st_a, int *arr)
 {
-	int max;
-	int min;
-
-	get_val(*stack, &max, &min);
-	ft_printf("min %d\tmax %d\n", min, max);
-	if (min == 0)
-	{
-		if (max == 1)
-		{
-			sx(stack);
-			rx(stack);
-		}
-	}
-	else if (max == 0)
-	{
-		if (min == 2)
-		{
-			rx(stack);
-			sx(stack);
-		}
-		else
-			rx(stack);
-	}
-	else
-	{
-		if (max == 2)
-			sx(stack);
-		else
-			rrx(stack);
-	}
+	data->turn = 1;
+	data->next = 1;
+	data->a = *st_a;
+	data->max = lst_len(*st_a);
+	data->curr_st = 0;
+	data->len = data->max;
 }
 
 int main (int argc, char **argv)
 {
 	t_list *st_a;
+	t_list *st_b;
+	t_data data;
 	int *arr;
+
+	st_b = NULL;
 	if (argc >= 2)
 	{
 		st_a = parce(argv[1], &arr);
 	}
 	else
 	{
-		printf("giv args pls\n");
+		ft_printf("giv args pls\n");
 		exit(0);
 	}
-	print_list(st_a);
 	int count = lst_len(st_a);
-	ft_printf("lst len %d\n", count);
-	if (count == 3)
-		sort_three(&st_a);
-	print_list(st_a);
-	while(1);
+	sort_arr(arr, count);
+	init_data(&data, &st_a, arr);
+	if(data.len < 6)
+	{
+		minimal(&st_a, &st_b, &data);
+		print_list(st_a);
+	}
+	big_sort(&data, arr);
+	// print_arr(arr, count);
+	// assign_index(st_a, arr);
+	// while (st_a)
+	// {
+	// 	ft_printf("list item %d\torder %d\n", st_a->num, st_a->order);
+	// 	st_a = st_a->next;
+	// }
 	return(0);
 }

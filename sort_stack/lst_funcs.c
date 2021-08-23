@@ -32,7 +32,6 @@ t_list	*ft_lstnew(int content)
 	if (!new)
 		return(NULL);
 	new->num = content;
-	new->uninit = 0;
 	new->next = NULL;
 	new->prev = NULL;
 	return(new);
@@ -60,7 +59,7 @@ int lst_len(t_list *ptr)
 		return(-1);
 	}
 	i = 0;
-	while(ptr && !ptr->uninit)
+	while(ptr)
 	{
 		i++;
 		ptr = ptr->next;

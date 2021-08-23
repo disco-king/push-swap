@@ -11,7 +11,8 @@ void sx(t_list **list)
 	}
 	ptr = (*list)->next;
 	(*list)->next = ptr->next;
-	(*list)->next->prev = *list;
+	if((*list)->next)
+		(*list)->next->prev = *list;
 	(*list)->prev = ptr;
 	ptr->prev = NULL;
 	ptr->next = *list;
@@ -83,6 +84,7 @@ void px(t_list **list, t_list **dest)
 		*dest = ptr;
 		(*dest)->next = NULL;
 		(*dest)->prev = NULL;
+		ft_printf("px\n");
 		return ;
 	}
 	(*dest)->prev = ptr;

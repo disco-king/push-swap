@@ -7,11 +7,23 @@
 typedef struct	s_list
 {
 	int num;
-	int uninit;
+	int order;
+	int turn;
 	struct s_list *next;
 	struct s_list *prev;
 }	t_list;
 
+typedef struct	s_data
+{
+	int turn;
+	int next;
+	int len;
+	int max;
+	int mid;
+	int curr_st;
+	t_list *a;
+	t_list *b;
+}	t_data;
 
 int ft_printf(const char *, ...);
 int	ft_atoi(const char *);
@@ -20,6 +32,7 @@ t_list *parce(char *, int **);
 int *get_arr(char *, int );
 void sort_arr(int *, int );
 void print_arr(int *, int);
+void assign_index(t_list *, int *);
 
 t_list	*ft_lstnew(int);
 void	ft_lstadd_back(t_list *, t_list *);
@@ -33,5 +46,8 @@ void px(t_list **, t_list **);
 
 void sort_three(t_list **);
 void get_val(t_list *, int *, int *);
+void minimal(t_list **, t_list **, t_data *);
+
+int big_sort(t_data *, int *);
 
 #endif
