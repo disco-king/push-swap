@@ -21,6 +21,7 @@ typedef struct	s_data
 	int max;
 	int mid;
 	int curr_st;
+	int *arr;
 	t_list *a;
 	t_list *b;
 }	t_data;
@@ -44,10 +45,14 @@ void rx(t_list **);
 void rrx(t_list **);
 void px(t_list **, t_list **);
 
-void sort_three(t_list **);
-void get_val(t_list *, int *, int *);
+void sort_three(t_list **, t_data *data);
+void get_val(t_list *, t_data *);
 void minimal(t_list **, t_list **, t_data *);
 
-int big_sort(t_data *, int *);
+int init_push(t_data *);
+int main_sort(t_data *);
+int sort_cycle(t_data *);
+int divide_b(t_data *);
+int re_turn(t_data *);
 
 #endif
