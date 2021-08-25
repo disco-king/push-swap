@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 typedef struct	s_list
 {
@@ -40,19 +41,20 @@ void	ft_lstadd_back(t_list *, t_list *);
 int		lst_len(t_list *);
 t_list *print_list(t_list *);
 
-void sx(t_list **);
-void rx(t_list **);
-void rrx(t_list **);
-void px(t_list **, t_list **);
+void sx(t_list **, char c);
+void rx(t_list **, char c);
+void rrx(t_list **, char c);
+void px(t_list **, t_list **, char c);
 
-void sort_three(t_list **, t_data *data);
+void sort_three(t_list **, t_data *data, char c);
 void get_val(t_list *, t_data *);
-void minimal(t_list **, t_list **, t_data *);
+void minimal(t_data *);
 
 int init_push(t_data *);
 int main_sort(t_data *);
 int sort_cycle(t_data *);
 int divide_b(t_data *);
 int re_turn(t_data *);
+int list_sorted(t_data *);
 
 #endif
