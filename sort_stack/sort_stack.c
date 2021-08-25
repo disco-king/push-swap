@@ -122,21 +122,24 @@ void assign_index(t_list *list, int *arr)
 			if (arr[i] == list->num)
 			{
 				list->order = i+1;
+				list->turn = 0;
 				i = 0;
 				break ;
 			}
 			i++;
 		}
+		// ft_printf("num %d\tturn %d\n", list->num, list->turn);
 		list = list->next;
 	}
 }
 
-void init_data(t_data *data, t_list **st_a, int *arr)
+void init_data(t_data *data, t_list *st_a, int *arr)
 {
-	data->turn = 1;
+	data->turn = 0;
 	data->next = 1;
-	data->a = *st_a;
-	data->max = lst_len(*st_a);
+	data->a = st_a;
+	data->b = NULL;
+	data->max = lst_len(st_a);
 	data->curr_st = 0;
 	data->len = data->max;
 }
@@ -145,7 +148,7 @@ int main (int argc, char **argv)
 {
 	t_list *st_a;
 	t_list *st_b;
-	t_data *data = (t_data*)malloc(sizeof(t_data *));
+	t_data data;
 	int *arr;
 
 	st_b = NULL;
@@ -160,13 +163,21 @@ int main (int argc, char **argv)
 	}
 	int count = lst_len(st_a);
 	sort_arr(arr, count);
-	init_data(data, &st_a, arr);
-	if(data->len < 6)
+	init_data(&data, st_a, arr);
+	if(data.len < 6)
 	{
-		minimal(&st_a, &st_b, data);
+		minimal(&st_a, &st_b, &data);
 		print_list(st_a);
+		exit(0);
 	}
-	big_sort(data, arr);
+	assign_index(data.a, arr);
+	// init_push(&data);
+	main_sort(&data);
+	ft_printf("\nstack a:\n\n");
+	print_list(data.a);
+	ft_printf("\nstack b:\n\n");
+	print_list(data.b);
+	ft_printf("\nnext %d\n", data.next);
 	// print_arr(arr, count);
 	// assign_index(st_a, arr);
 	// while (st_a)

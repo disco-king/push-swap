@@ -8,10 +8,14 @@ t_list *print_list(t_list *ptr)
 	{
 		while(ptr->next)
 		{
-			ft_printf("way down %d\n", ptr->num);
+			ft_printf("way down %d", ptr->num);
+			ft_printf(" turn %d", ptr->turn);
+			ft_printf("\n");
 			ptr = ptr->next;
 		}
-		ft_printf("last one %d\n\n", ptr->num);
+		ft_printf("last one %d", ptr->num);
+		ft_printf(" turn %d", ptr->turn);
+		ft_printf("\n\n");
 	}
 	else if(!ptr->next)
 	{
@@ -41,8 +45,9 @@ void	ft_lstadd_back(t_list *lst, t_list *new)
 {
 	t_list *ptr = lst;
 	
-	while(ptr->next)
-		ptr = ptr->next;
+	if(ptr->next)
+		while(ptr->next)
+			ptr = ptr->next;
 	ptr->next = new;
 	new->prev = ptr;
 }

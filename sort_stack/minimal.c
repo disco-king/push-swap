@@ -1,13 +1,13 @@
 #include "sort_stack.h"
 
-void get_val(t_list *stack, int *max, int *min)
+void get_val(t_list *stack, t_data *data)
 {
 	int i;
 	int b;
 	int s;
 
-	*max = 0;
-	*min = *max;
+	data->max = 0;
+	data->mid = 0;
 	b = stack->num;
 	s = b;
 	i = 1;
@@ -17,33 +17,29 @@ void get_val(t_list *stack, int *max, int *min)
 		if(b < stack->num)
 		{
 			b = stack->num;
-			*max = i;
+			data->max = i;
 		}
 		if(s > stack->num)
 		{
 			s = stack->num;
-			*min = i;
+			data->mid = i;
 		}
 		i++;
 		stack = stack->next;
 	}
 }
 
-void sort_three(t_list **stack)
+void sort_three(t_list **stack, t_data *data)
 {
-	int max;
-	int min;
-
-	get_val(*stack, &max, &min);
-	// ft_printf("min %d\tmax %d\n", min, max);
-	if (min == 0 && max == 1)
+	get_val(*stack, data);
+	if (data->mid == 0 && data->max == 1)
 	{
 		sx(stack);
 		rx(stack);
 	}
-	else if (max == 0)
+	else if (data->max == 0)
 	{
-		if (min == 2)
+		if (data->mid == 2)
 		{
 			rx(stack);
 			sx(stack);
@@ -51,9 +47,9 @@ void sort_three(t_list **stack)
 		else
 			rx(stack);
 	}
-	else if (max == 2 && min != 0)
+	else if (data->max == 2 && data->mid != 0)
 	{
-		if (max == 2)
+		if (data->max == 2)
 			sx(stack);
 		else
 			rrx(stack);
@@ -62,36 +58,34 @@ void sort_three(t_list **stack)
 
 void minimal(t_list **st_a, t_list **st_b, t_data *data)
 {
-	int max, min;
-
-	get_val(*st_a, &max, &min);
-	if(lst_len(*st_a) == 2 && max == 0)
+	get_val(*st_a, data);
+	if(lst_len(*st_a) == 2 && data->max == 0)
 		sx(st_a);
 	else if(lst_len(*st_a) == 3)
-		sort_three(st_a);
+		sort_three(st_a, data);
 	else if(lst_len(*st_a) == 4)
 	{
-		while(min && min != 3)
+		while(data->mid && data->mid != 3)
 		{
 			rx(st_a);
-			get_val(*st_a, &max, &min);
+			get_val(*st_a, data);
 		}
-		if(min)
+		if(data->mid)
 			rrx(st_a);
 		ft_printf("pb ");
 		px(st_a, st_b);
-		sort_three(st_a);
+		sort_three(st_a, data);
 		ft_printf("pa ");
 		px(st_b, st_a);
 	}
 	else if (lst_len(*st_a) == 5)
 	{
-		while(min && min != 4)
+		while(data->mid && data->mid != 4)
 		{
 			rx(st_a);
-			get_val(*st_a, &max, &min);
+			get_val(*st_a, data);
 		}
-		if(min)
+		if(data->mid)
 			rrx(st_a);
 		ft_printf("pb ");
 		px(st_a, st_b);
