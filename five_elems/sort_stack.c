@@ -26,53 +26,59 @@ int	ft_atoi(const char *num)
 	return (res);
 }
 
-int *get_arr(char *nums, int count)
+int *get_arr(t_list *list)
 {
 	int i = 0;
+	int count = lst_len(list);
 	int *arr = malloc(sizeof(int) * count);
 
 	while(i < count)
 	{
-		if ((*nums <= 57 && *nums >= 48) || *nums == '-')
-		{
-			arr[i] = ft_atoi(nums);
-			while((*nums <= 57 && *nums >= 48) || *nums == '-')
-				nums++;
-			i++;
-			continue;
-		}
-		nums++;
+		arr[i] = list->num;
+		i++;
+		list = list->next;
 	}
 	return(arr);
 }
 
-t_list *parce(char *nums, int **arr)
+int check_false(char *str)
+{
+	int i = 0;
+
+	while(str[i])
+	{
+		if((str[i] >= 48 && str[i] <= 57)
+			|| str[i] == '-' || str[i] == '+')
+			i++;
+		else
+			return(1);
+	}
+	return(0);
+}
+
+t_list *parce(char **nums, int **arr)
 {
 	int buff;
 	int i;
 	int count;
 	t_list *start;
 
-	i = 0;
+	i = 1;
 	start = NULL;
 	count = 0;
 	while(nums[i])
 	{
-		if ((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
-		{
-			buff = ft_atoi(&(nums[i]));
-			if (!start)
-				start = ft_lstnew(buff);
-			else
-				ft_lstadd_back(start, ft_lstnew(buff));
-			while((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
-				i++;
-			count++;
-			continue;
-		}
+		if(check_false(nums[i]))
+			return (NULL);
+		buff = ft_atoi(nums[i]);
+		if (!start)
+			start = ft_lstnew(buff);
+		else
+			ft_lstadd_back(start, ft_lstnew(buff));
 		i++;
+		count++;
 	}
-	*arr = get_arr(nums, count);
+	*arr = get_arr(start);
 	return(start);
 }
 
@@ -134,32 +140,38 @@ void assign_index(t_list *list, int *arr)
 
 void init_data(t_data *data, t_list *st_a, int *arr)
 {
-	data->turn = 0;
-	data->next = 1;
+	data->moves = 0;
+	data->up = 0;
 	data->a = st_a;
 	data->b = NULL;
-	data->max = lst_len(st_a);
-	data->curr_st = 0;
-	data->len = data->max;
+	data->len = lst_len(st_a);
+	data->max = data->len;
+	data->min = 1;
+}
+
+void error_exit(int code)
+{
+	if (code)
+	{
+		ft_printf("giv args pls\n");
+		exit(0);
+	}
+	ft_printf("wrong input\n");
+	exit(0);
 }
 
 int main (int argc, char **argv)
 {
 	t_list *st_a;
-	t_list *st_b;
 	t_data data;
 	int *arr;
 
-	st_b = NULL;
-	if (argc >= 2)
-	{
-		st_a = parce(argv[1], &arr);
-	}
+	if (argc > 2)
+		st_a = parce(argv, &arr);
 	else
-	{
-		ft_printf("giv args pls\n");
-		exit(0);
-	}
+		error_exit(1);
+	if (!st_a)
+		error_exit(0);
 	int count = lst_len(st_a);
 	sort_arr(arr, count);
 	init_data(&data, st_a, arr);
@@ -169,12 +181,16 @@ int main (int argc, char **argv)
 		print_list(data.a);
 		exit(0);
 	}
+	if(sorted(&data))
+	{
+		ft_printf("ALREADY SORTED\n");
+		exit(0);
+	}
 	assign_index(data.a, arr);
 	main_sort(&data);
-	ft_printf("\nstack a:\n\n");
-	print_list(data.a);
-	ft_printf("\nstack b:\n\n");
-	print_list(data.b);
-	ft_printf("\nnext %d\n", data.next);
+	// ft_printf("\nstack a:\n\n");
+	// print_list(data.a);
+	// ft_printf("\nstack b:\n\n");
+	// print_list(data.b);
 	return(0);
 }

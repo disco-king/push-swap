@@ -9,12 +9,12 @@ t_list *print_list(t_list *ptr)
 		while(ptr->next)
 		{
 			ft_printf("way down %d", ptr->num);
-			ft_printf(" turn %d", ptr->turn);
+			ft_printf(" order %d", ptr->order);
 			ft_printf("\n");
 			ptr = ptr->next;
 		}
 		ft_printf("last one %d", ptr->num);
-		ft_printf(" turn %d", ptr->turn);
+		ft_printf(" order %d", ptr->order);
 		ft_printf("\n\n");
 	}
 	else if(!ptr->next)
@@ -58,11 +58,11 @@ int lst_len(t_list *ptr)
 
 	if (!ptr)
 		return(0);
-	if (ptr->prev)
-	{
-		ft_printf("len not the first list item\n");
-		return(-1);
-	}
+	// if (ptr->prev)
+	// {
+	// 	ft_printf("len not the first list item\n");
+	// 	return(-1);
+	// }
 	i = 0;
 	while(ptr)
 	{

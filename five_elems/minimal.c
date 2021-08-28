@@ -7,7 +7,7 @@ void get_val(t_list *stack, t_data *data)
 	int min;
 
 	data->max = 0;
-	data->mid = 0;
+	data->min = 0;
 	max = stack->num;
 	min = max;
 	i = 1;
@@ -22,7 +22,7 @@ void get_val(t_list *stack, t_data *data)
 		if(min > stack->num)
 		{
 			min = stack->num;
-			data->mid = i;
+			data->min = i;
 		}
 		i++;
 		stack = stack->next;
@@ -32,14 +32,14 @@ void get_val(t_list *stack, t_data *data)
 void sort_three(t_list **stack, t_data *data, char c)
 {
 	get_val(*stack, data);
-	if (data->mid == 0 && data->max == 1)
+	if (data->min == 0 && data->max == 1)
 	{
 		sx(stack, c);
 		rx(stack, c);
 	}
 	else if (data->max == 0)
 	{
-		if (data->mid == 2)
+		if (data->min == 2)
 		{
 			rx(stack, c);
 			sx(stack, c);
@@ -47,7 +47,7 @@ void sort_three(t_list **stack, t_data *data, char c)
 		else
 			rx(stack, c);
 	}
-	else if (data->mid != 0)
+	else if (data->min != 0)
 	{
 		if (data->max == 2)
 			sx(stack, c);
@@ -65,12 +65,12 @@ void minimal(t_data *data)
 		sort_three(&(data->a), data, 'a');
 	else if(lst_len(data->a) == 4)
 	{
-		while(data->mid && data->mid != 3)
+		while(data->min && data->min != 3)
 		{
 			rx(&(data->a), 'a');
 			get_val(data->a, data);
 		}
-		if(data->mid)
+		if(data->min)
 			rrx(&(data->a), 'a');
 		px(&(data->a), &(data->b), 'b');
 		sort_three(&(data->a), data, 'a');
@@ -78,12 +78,12 @@ void minimal(t_data *data)
 	}
 	else if (lst_len(data->a) == 5)
 	{
-		while(data->mid && data->mid != 4)
+		while(data->min && data->min != 4)
 		{
 			rx(&(data->a), 'a');
 			get_val(data->a, data);
 		}
-		if(data->mid)
+		if(data->min)
 			rrx(&(data->a), 'a');
 		px(&(data->a), &(data->b), 'b');
 		minimal(data);

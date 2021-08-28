@@ -16,12 +16,13 @@ typedef struct	s_list
 
 typedef struct	s_data
 {
-	int turn;
-	int next;
+	int moves;
+	int up;
+	int to_move;
+	int a_order;
 	int len;
 	int max;
-	int mid;
-	int curr_st;
+	int min;
 	int *arr;
 	t_list *a;
 	t_list *b;
@@ -29,9 +30,9 @@ typedef struct	s_data
 
 int ft_printf(const char *, ...);
 int	ft_atoi(const char *);
-t_list *parce(char *, int **);
+t_list *parce(char **, int **);
 
-int *get_arr(char *, int );
+int *get_arr(t_list*);
 void sort_arr(int *, int );
 void print_arr(int *, int);
 void assign_index(t_list *, int *);
@@ -50,11 +51,8 @@ void sort_three(t_list **, t_data *data, char c);
 void get_val(t_list *, t_data *);
 void minimal(t_data *);
 
-int init_push(t_data *);
+void init_push(t_data *);
 int main_sort(t_data *);
-int sort_cycle(t_data *);
-int divide_b(t_data *);
-int re_turn(t_data *);
-int list_sorted(t_data *);
+int sorted(t_data *);
 
 #endif
