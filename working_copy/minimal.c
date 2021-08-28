@@ -29,30 +29,30 @@ void get_val(t_list *stack, t_data *data)
 	}
 }
 
-void sort_three(t_list **stack, t_data *data)
+void sort_three(t_list **stack, t_data *data, char c)
 {
 	get_val(*stack, data);
 	if (data->mid == 0 && data->max == 1)
 	{
-		sx(stack);
-		rx(stack);
+		sx(stack, c);
+		rx(stack, c);
 	}
 	else if (data->max == 0)
 	{
 		if (data->mid == 2)
 		{
-			rx(stack);
-			sx(stack);
+			rx(stack, c);
+			sx(stack, c);
 		}
 		else
-			rx(stack);
+			rx(stack, c);
 	}
 	else if (data->mid != 0)
 	{
 		if (data->max == 2)
-			sx(stack);
+			sx(stack, c);
 		else
-			rrx(stack);
+			rrx(stack, c);
 	}
 }
 
@@ -60,37 +60,33 @@ void minimal(t_data *data)
 {
 	get_val(data->a, data);
 	if(lst_len(data->a) == 2 && data->max == 0)
-		sx(&(data->a));
+		sx(&(data->a), 'a');
 	else if(lst_len(data->a) == 3)
-		sort_three(&(data->a), data);
+		sort_three(&(data->a), data, 'a');
 	else if(lst_len(data->a) == 4)
 	{
 		while(data->mid && data->mid != 3)
 		{
-			rx(&(data->a));
+			rx(&(data->a), 'a');
 			get_val(data->a, data);
 		}
 		if(data->mid)
-			rrx(&(data->a));
-		ft_printf("pb ");
-		px(&(data->a), &(data->b));
-		sort_three(&(data->a), data);
-		ft_printf("pa ");
-		px(&(data->b), &(data->a));
+			rrx(&(data->a), 'a');
+		px(&(data->a), &(data->b), 'b');
+		sort_three(&(data->a), data, 'a');
+		px(&(data->b), &(data->a), 'a');
 	}
 	else if (lst_len(data->a) == 5)
 	{
 		while(data->mid && data->mid != 4)
 		{
-			rx(&(data->a));
+			rx(&(data->a), 'a');
 			get_val(data->a, data);
 		}
 		if(data->mid)
-			rrx(&(data->a));
-		ft_printf("pb ");
-		px(&(data->a), &(data->b));
+			rrx(&(data->a), 'a');
+		px(&(data->a), &(data->b), 'b');
 		minimal(data);
-		ft_printf("pa ");
-		px(&(data->b), &(data->a));
+		px(&(data->b), &(data->a), 'a');
 	}
 }

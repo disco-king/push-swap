@@ -12,18 +12,31 @@ int init_push(t_data *data)
 	while(i++ < data->len && !data->a->turn)
 	{
 		if(data->a->order <= data->mid)
-		{
-			ft_printf("i pushing %d order %d\n", data->a->num, data->a->order);
-			ft_printf("pa ");
-			px(&(data->a), &(data->b));
-		}
+			px(&(data->a), &(data->b), 'b');
 		else
-		{
-			ft_printf("i reverse %d order %d\n", data->a->num, data->a->order);
-			rx(&(data->a));
-		}
+			rx(&(data->a), 'a');
 	}
 	return(i - 1);
+}
+
+void sub_sort(t_data *data)
+{
+	if(data->len == 2)
+	{
+		if(data->b->num > data->b->next->num)
+			sx(&(data->b), 'b');
+	}
+	else
+		sort_three(&(data->b), data, 'b');
+	while(data->b)
+	{
+		px(&(data->b), &(data->a), 'b');
+		if(data->a->order == data->next)
+		{
+			rx(&(data->a), 'a');
+			data->next++;
+		}
+	}
 }
 
 int divide_b(t_data *data)
@@ -32,37 +45,32 @@ int divide_b(t_data *data)
 
 	data->len = lst_len(data->b);
 	data->turn++;
+	if(data->len == 2 || data->len == 3)
+	{
+		sub_sort(data);
+		return (0);
+	}
 	data->max = data->mid;
 	data->mid = (data->max - data->next) / 2 + data->next;
-	ft_printf("\ndividing\n\n");
 	while(i++ < data->len)
 	{
 		if(data->b->order == data->next)
 		{
-			ft_printf("pushing %d order %d\n", data->b->num, data->b->order);
 			data->b->turn = data->turn;
-			ft_printf("pa ");
-			px(&(data->b), &(data->a));
-			rx(&(data->a));
+			px(&(data->b), &(data->a), 'a');
+			rx(&(data->a), 'a');
 			data->next++;
 		}
 		else if(data->b->order >= data->mid)
 		{
 			data->b->turn = data->turn;
-			ft_printf("pushing %d order %d\n", data->b->num, data->b->order);
-			ft_printf("pa ");
-			px(&(data->b), &(data->a));
+			px(&(data->b), &(data->a), 'a');
 		}
 		else
-		{
-			ft_printf("reverse %d order %d\n", data->b->num, data->b->order);
-			rx(&(data->b));
-		}
+			rx(&(data->b), 'b');
 	}
-	ft_printf("\ndone\n\n");
 	return(i - 1);
 }
-
 int re_turn(t_data *data)
 {
 	int lim;
@@ -73,19 +81,16 @@ int re_turn(t_data *data)
 		if(data->a->order == data->next)
 		{
 			data->next++;
-			rx(&(data->a));
+			rx(&(data->a), 'a');
 		}
 		else
-		{
-			ft_printf("re pb ");
-			px(&(data->a), &(data->b));
-		}
+			px(&(data->a), &(data->b), 'b');
 	}
-	ft_printf("\nstack a:\n\n");
-	print_list(data->a);
-	ft_printf("\nstack b:\n\n");
-	print_list(data->b);
-	ft_printf("\nnext %d\n", data->next);
+	// ft_printf("\nstack a:\n\n");
+	// print_list(data->a);
+	// ft_printf("\nstack b:\n\n");
+	// print_list(data->b);
+	// ft_printf("\nnext %d\n", data->next);
 	return(lim);
 }
 
@@ -114,7 +119,7 @@ int check_bottom(t_data *data)
 	while(ptr->order > data->next)
 	{
 		ptr = ptr->prev;
-		rrx(&(data->a));
+		rrx(&(data->a), 'a');
 	}
 	return(0);
 }
@@ -145,19 +150,12 @@ int main_sort(t_data *data)
 		init_push(data);
 		if(data->a->order < data->next)
 			check_bottom(data);
-		ft_printf("\nstack a:\n\n");
-		print_list(data->a);
-		ft_printf("\nstack b:\n\n");
-		print_list(data->b);
-		ft_printf("\nnext %d\n", data->next);
+		// ft_printf("\nstack a:\n\n");
+		// print_list(data->a);
+		// ft_printf("\nstack b:\n\n");
+		// print_list(data->b);
+		// ft_printf("\nnext %d\n", data->next);
 		res = sort_cycle(data);
 	}
 	return(0);
 }
-
-// while(1)
-// {
-// 	read(0, &b, 1);
-// 	if(b == 32)
-// 		break;
-// }

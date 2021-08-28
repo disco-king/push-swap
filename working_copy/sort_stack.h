@@ -41,12 +41,12 @@ void	ft_lstadd_back(t_list *, t_list *);
 int		lst_len(t_list *);
 t_list *print_list(t_list *);
 
-void sx(t_list **);
-void rx(t_list **);
-void rrx(t_list **);
-void px(t_list **, t_list **);
+void sx(t_list **, char c);
+void rx(t_list **, char c);
+void rrx(t_list **, char c);
+void px(t_list **, t_list **, char c);
 
-void sort_three(t_list **, t_data *data);
+void sort_three(t_list **, t_data *data, char c);
 void get_val(t_list *, t_data *);
 void minimal(t_data *);
 

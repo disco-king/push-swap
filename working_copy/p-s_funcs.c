@@ -1,6 +1,6 @@
 #include "sort_stack.h"
 
-void sx(t_list **list)
+void sx(t_list **list, char c)
 {
 	t_list *ptr;
 
@@ -17,10 +17,10 @@ void sx(t_list **list)
 	ptr->prev = NULL;
 	ptr->next = *list;
 	*list = ptr;
-	ft_printf("sx\n");
+	ft_printf("s%c\n", c);
 }
 
-void rx(t_list **list)
+void rx(t_list **list, char c)
 {
 	t_list *ptr;
 
@@ -39,10 +39,10 @@ void rx(t_list **list)
 	(*list)->next->prev = NULL;
 	(*list)->next = NULL;
 	*list = ptr;
-	ft_printf("rx\n");
+	ft_printf("r%c\n", c);
 }
 
-void rrx(t_list **list)
+void rrx(t_list **list, char c)
 {
 	t_list *ptr;
 
@@ -60,10 +60,10 @@ void rrx(t_list **list)
 	ptr->prev->next = NULL;
 	ptr->prev = NULL;
 	*list = ptr;
-	ft_printf("rrx\n");
+	ft_printf("rr%c\n", c);
 }
 
-void px(t_list **list, t_list **dest)
+void px(t_list **list, t_list **dest, char c)
 {
 	t_list *ptr;
 
@@ -84,12 +84,12 @@ void px(t_list **list, t_list **dest)
 		*dest = ptr;
 		(*dest)->next = NULL;
 		(*dest)->prev = NULL;
-		ft_printf("px\n");
+		ft_printf("p%c\n", c);
 		return ;
 	}
 	(*dest)->prev = ptr;
 	(*dest)->prev->next = *dest;
 	*dest = (*dest)->prev;
 	(*dest)->prev = NULL;
-	ft_printf("px\n");
+	ft_printf("p%c\n", c);
 }
