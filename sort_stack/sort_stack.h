@@ -29,9 +29,9 @@ typedef struct	s_data
 
 int ft_printf(const char *, ...);
 int	ft_atoi(const char *);
-t_list *parce(char *, int **);
+t_list *parce(char **, int **);
 
-int *get_arr(char *, int );
+int *get_arr(t_list*);
 void sort_arr(int *, int );
 void print_arr(int *, int);
 void assign_index(t_list *, int *);

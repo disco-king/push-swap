@@ -6,7 +6,7 @@ void sx(t_list **list, char c)
 
 	if(!(*list)->next || (*list)->prev)
 	{
-		ft_printf("not the first list item\n");
+		// ft_printf("not the first list item\n");
 		return ;
 	}
 	ptr = (*list)->next;
@@ -30,7 +30,7 @@ void rx(t_list **list, char c)
 			ptr = ptr->next;
 	else
 	{
-		ft_printf("not the first list item\n");
+		// ft_printf("not the first list item\n");
 		return ;
 	}
 	ptr->next = *list;
@@ -52,7 +52,7 @@ void rrx(t_list **list, char c)
 			ptr = ptr->next;
 	else
 	{
-		ft_printf("not the first list item\n");
+		// ft_printf("not the first list item\n");
 		return ;
 	}
 	(*list)->prev = ptr;
@@ -71,7 +71,7 @@ void px(t_list **list, t_list **dest, char c)
 
 	if(ptr->prev)
 	{
-		ft_printf("not the first list item\n");
+		// ft_printf("not the first list item\n");
 		return ;
 	}
 

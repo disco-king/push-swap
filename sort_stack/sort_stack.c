@@ -26,53 +26,59 @@ int	ft_atoi(const char *num)
 	return (res);
 }
 
-int *get_arr(char *nums, int count)
+int *get_arr(t_list *list)
 {
 	int i = 0;
+	int count = lst_len(list);
 	int *arr = malloc(sizeof(int) * count);
 
 	while(i < count)
 	{
-		if ((*nums <= 57 && *nums >= 48) || *nums == '-')
-		{
-			arr[i] = ft_atoi(nums);
-			while((*nums <= 57 && *nums >= 48) || *nums == '-')
-				nums++;
-			i++;
-			continue;
-		}
-		nums++;
+		arr[i] = list->num;
+		i++;
+		list = list->next;
 	}
 	return(arr);
 }
 
-t_list *parce(char *nums, int **arr)
+int check_false(char *str)
+{
+	int i = 0;
+
+	while(str[i])
+	{
+		if((str[i] >= 48 && str[i] <= 57)
+			|| str[i] == '-' || str[i] == '+')
+			i++;
+		else
+			return(1);
+	}
+	return(0);
+}
+
+t_list *parce(char **nums, int **arr)
 {
 	int buff;
 	int i;
 	int count;
 	t_list *start;
 
-	i = 0;
+	i = 1;
 	start = NULL;
 	count = 0;
 	while(nums[i])
 	{
-		if ((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
-		{
-			buff = ft_atoi(&(nums[i]));
-			if (!start)
-				start = ft_lstnew(buff);
-			else
-				ft_lstadd_back(start, ft_lstnew(buff));
-			while((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
-				i++;
-			count++;
-			continue;
-		}
+		if(check_false(nums[i]))
+			return (NULL);
+		buff = ft_atoi(nums[i]);
+		if (!start)
+			start = ft_lstnew(buff);
+		else
+			ft_lstadd_back(start, ft_lstnew(buff));
 		i++;
+		count++;
 	}
-	*arr = get_arr(nums, count);
+	*arr = get_arr(start);
 	return(start);
 }
 
@@ -146,18 +152,19 @@ void init_data(t_data *data, t_list *st_a, int *arr)
 int main (int argc, char **argv)
 {
 	t_list *st_a;
-	t_list *st_b;
 	t_data data;
 	int *arr;
 
-	st_b = NULL;
-	if (argc >= 2)
-	{
-		st_a = parce(argv[1], &arr);
-	}
+	if (argc > 2)
+		st_a = parce(argv, &arr);
 	else
 	{
 		ft_printf("giv args pls\n");
+		exit(0);
+	}
+	if (!st_a)
+	{
+		ft_printf("wrong input\n");
 		exit(0);
 	}
 	int count = lst_len(st_a);
@@ -166,15 +173,45 @@ int main (int argc, char **argv)
 	if(data.len < 6)
 	{
 		minimal(&data);
-		print_list(data.a);
+		// print_list(data.a);
 		exit(0);
 	}
 	assign_index(data.a, arr);
 	main_sort(&data);
-	ft_printf("\nstack a:\n\n");
-	print_list(data.a);
-	ft_printf("\nstack b:\n\n");
-	print_list(data.b);
-	ft_printf("\nnext %d\n", data.next);
+	// ft_printf("\nstack a:\n\n");
+	// print_list(data.a);
+	// ft_printf("\nstack b:\n\n");
+	// print_list(data.b);
+	// ft_printf("\nnext %d\n", data.next);
 	return(0);
 }
+
+// t_list *parce(char **nums, int **arr)
+// {
+// 	int buff;
+// 	int i;
+// 	int count;
+// 	t_list *start;
+
+// 	i = 0;
+// 	start = NULL;
+// 	count = 0;
+// 	while(nums[i])
+// 	{
+// 		if ((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
+// 		{
+// 			buff = ft_atoi(&(nums[i]));
+// 			if (!start)
+// 				start = ft_lstnew(buff);
+// 			else
+// 				ft_lstadd_back(start, ft_lstnew(buff));
+// 			while((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
+// 				i++;
+// 			count++;
+// 			continue;
+// 		}
+// 		i++;
+// 	}
+// 	*arr = get_arr(nums, count);
+// 	return(start);
+// }

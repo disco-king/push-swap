@@ -58,11 +58,11 @@ int lst_len(t_list *ptr)
 
 	if (!ptr)
 		return(0);
-	if (ptr->prev)
-	{
-		ft_printf("len not the first list item\n");
-		return(-1);
-	}
+	// if (ptr->prev)
+	// {
+	// 	ft_printf("len not the first list item\n");
+	// 	return(-1);
+	// }
 	i = 0;
 	while(ptr)
 	{

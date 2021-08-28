@@ -53,7 +53,7 @@ int divide_b(t_data *data)
 	return(i - 1);
 }
 
-//option 2
+//option 2, fastest
 
 int divide_b(t_data *data)
 {
