@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+# define BIG 999999
+
 typedef struct	s_list
 {
 	int num;
@@ -16,13 +18,13 @@ typedef struct	s_list
 
 typedef struct	s_data
 {
-	int moves;
 	int up;
 	int to_move;
 	int a_order;
 	int len;
 	int max;
 	int min;
+	int dep;
 	int *arr;
 	t_list *a;
 	t_list *b;

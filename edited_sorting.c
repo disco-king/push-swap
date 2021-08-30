@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sorting.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/30 12:18:32 by marvin            #+#    #+#             */
-/*   Updated: 2021/08/30 12:18:32 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "sort_stack.h"
 
 void init_push(t_data *data)
@@ -107,6 +95,7 @@ int sorted(t_data *data)
 void move_item(t_data *data, int a_order)
 {
 	modif_a(&(data->a), a_order);
+	ft_printf("UP %d\n", data->up);
 	if(data->up)
 		while(data->b->order != data->to_move)
 			rx(&(data->b), 'b');
@@ -119,14 +108,20 @@ void move_item(t_data *data, int a_order)
 void push_next(t_data *data)
 {
 	int moves;
-	int dep;
 	int a_order;
 	int min;
 	t_list *ptr;
+	int dep;
 
-	ptr = data->b;
-	min = BIG;
 	dep = 1;
+	data->to_move = data->len;
+	ptr = data->b;
+	min = 999999;
+	ft_printf("TO MOVE\n");
+	ft_printf("\nstack a:\n\n");
+	print_list(data->a);
+	ft_printf("\nstack b:\n\n");
+	print_list(data->b);
 	while(ptr)
 	{
 		moves = b_moves(lst_len(data->b), dep) + a_moves(data, data->a, ptr->order);
@@ -135,11 +130,13 @@ void push_next(t_data *data)
 			data->to_move = ptr->order;
 			a_order = data->a_order;
 			min = moves;
+			ft_printf("ORDER %d DEPTH %d\n", ptr->order, dep);
 			data->up = 0;
 			if(dep <= lst_len(data->b)/2 + 1)
 				data->up = 1;
 		}
 		dep++;
+		ft_printf("ORDER REACHED %d DEPTH %d\n", ptr->order, dep);
 		ptr = ptr->next;
 	}
 	move_item(data, a_order);
@@ -166,6 +163,11 @@ void scroll(t_list **list)
 int main_sort(t_data *data)
 {
 	init_push(data);
+	ft_printf("INITIALIZED\n");
+	ft_printf("\nstack a:\n\n");
+	print_list(data->a);
+	ft_printf("\nstack b:\n\n");
+	print_list(data->b);
 	while(data->b)
 	{
 		push_next(data);

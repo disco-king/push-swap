@@ -56,30 +56,80 @@ int check_false(char *str)
 	return(0);
 }
 
+t_list *clear_exit(t_list*list)
+{
+	while(list->next)
+	{
+		list = list->next;
+		free(list->prev);
+		list->prev = NULL;
+	}
+	free(list);
+	list = NULL;
+	return(list);
+}
+
+int check_dups(int *arr, int len)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while(i < len)
+	{
+		while(j < i)
+		{
+			if(arr[j] == arr[i])
+				return(1);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return(0);
+}
+
+t_list *check_args(t_list *list, int *arr, int len)
+{
+	int i;
+
+	i = 0;
+	if (check_dups(arr, len))
+		return(clear_exit(list));
+	while(i < len)
+	{
+		if (arr[i] > arr[i + 1])
+			return(list);
+		i++;
+	}
+	return(clear_exit(list));
+}
+
 t_list *parce(char **nums, int **arr)
 {
 	int buff;
 	int i;
-	int count;
+	// int count;
 	t_list *start;
 
 	i = 1;
 	start = NULL;
-	count = 0;
+	// count = 0;
 	while(nums[i])
 	{
 		if(check_false(nums[i]))
-			return (NULL);
+			return (clear_exit(start));
 		buff = ft_atoi(nums[i]);
 		if (!start)
 			start = ft_lstnew(buff);
 		else
 			ft_lstadd_back(start, ft_lstnew(buff));
 		i++;
-		count++;
+		// count++;
 	}
 	*arr = get_arr(start);
-	return(start);
+	return(check_args(start, arr, i));
 }
 
 
@@ -140,7 +190,6 @@ void assign_index(t_list *list, int *arr)
 
 void init_data(t_data *data, t_list *st_a, int *arr)
 {
-	data->moves = 0;
 	data->up = 0;
 	data->a = st_a;
 	data->b = NULL;
