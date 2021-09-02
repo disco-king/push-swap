@@ -1,73 +1,53 @@
-#include "sort_stack.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_funcs.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmalphit <fmalphit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/30 16:54:47 by fmalphit          #+#    #+#             */
+/*   Updated: 2021/08/30 20:31:10 by fmalphit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_list *print_list(t_list *ptr)
-{
-	if(!ptr)
-		ft_printf("list empty\n");
-	else if(!ptr->prev)
-	{
-		while(ptr->next)
-		{
-			ft_printf("way down %d", ptr->num);
-			ft_printf(" order %d", ptr->order);
-			ft_printf("\n");
-			ptr = ptr->next;
-		}
-		ft_printf("last one %d", ptr->num);
-		ft_printf(" order %d", ptr->order);
-		ft_printf("\n\n");
-	}
-	else if(!ptr->next)
-	{
-		while(ptr->prev)
-		{
-			ft_printf("way up   %d\n", ptr->num);
-			ptr = ptr->prev;
-		}
-		ft_printf("last one %d\n\n", ptr->num);
-	}
-	return(ptr);
-}
+#include "push_swap.h"
 
 t_list	*ft_lstnew(int content)
 {
-	t_list *new;
+	t_list	*new;
+
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
-		return(NULL);
+		return (NULL);
 	new->num = content;
 	new->next = NULL;
 	new->prev = NULL;
-	return(new);
+	return (new);
 }
 
 void	ft_lstadd_back(t_list *lst, t_list *new)
 {
-	t_list *ptr = lst;
-	
-	if(ptr->next)
-		while(ptr->next)
+	t_list	*ptr;
+
+	ptr = lst;
+	if (ptr->next)
+		while (ptr->next)
 			ptr = ptr->next;
 	ptr->next = new;
 	new->prev = ptr;
 }
 
-int lst_len(t_list *ptr)
+int	lst_len(t_list *ptr)
 {
-	int i;
+	int	i;
 
 	if (!ptr)
-		return(0);
-	// if (ptr->prev)
-	// {
-	// 	ft_printf("len not the first list item\n");
-	// 	return(-1);
-	// }
+		return (0);
 	i = 0;
-	while(ptr)
+	while (ptr)
 	{
 		i++;
 		ptr = ptr->next;
 	}
-	return(i);
+	return (i);
 }
