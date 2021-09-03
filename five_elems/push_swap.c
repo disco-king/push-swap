@@ -6,7 +6,7 @@
 /*   By: fmalphit <fmalphit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 15:47:22 by fmalphit          #+#    #+#             */
-/*   Updated: 2021/09/02 18:20:06 by fmalphit         ###   ########.fr       */
+/*   Updated: 2021/09/03 15:19:12 by fmalphit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	get_nums(char *nums, t_list **start)
 				*start = ft_lstnew(buff);
 			else
 				ft_lstadd_back(*start, ft_lstnew(buff));
-            check_list(start);
+            check_list(*start);
 			while ((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
 				i++;
 			continue ;
