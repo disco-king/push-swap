@@ -1,7 +1,7 @@
 # push-swap
 
-functional version of five elements sort in five_elems/;
-an attempt a at a differen algorythm in sort_stack/, but with poor results;
+functional version of five elements sort in five_elems/
+an attempt a at a differen algorythm in sort_stack/, but with poor results
 
 
 a python script in root directory,
