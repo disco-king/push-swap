@@ -31,6 +31,7 @@ t_list	*parse(char **nums, int **arr)
 			start = ft_lstnew(buff);
 		else
 			ft_lstadd_back(start, ft_lstnew(buff));
+        check_list(start);
 		i++;
 	}
 	*arr = get_arr(start);
@@ -60,6 +61,7 @@ void	get_nums(char *nums, t_list **start)
 				*start = ft_lstnew(buff);
 			else
 				ft_lstadd_back(*start, ft_lstnew(buff));
+            check_list(start);
 			while ((nums[i] <= 57 && nums[i] >= 48) || nums[i] == '-')
 				i++;
 			continue ;

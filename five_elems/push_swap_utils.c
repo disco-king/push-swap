@@ -70,6 +70,8 @@ int	*get_arr(t_list *list)
 	i = 0;
 	count = lst_len(list);
 	arr = malloc(sizeof(int) * count);
+    if (!arr)
+        return (arr);
 	while (i < count)
 	{
 		arr[i] = list->num;
@@ -77,6 +79,13 @@ int	*get_arr(t_list *list)
 		list = list->next;
 	}
 	return (arr);
+}
+
+void    check_list(t_list *list)
+{
+    if (list)
+        return ;
+    error_exit(0, NULL);
 }
 
 void	init_data(t_data *data, t_list *st_a)

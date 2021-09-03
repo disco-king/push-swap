@@ -75,4 +75,5 @@ void	main_sort(t_data *data, int *arr)
 		push_next(data);
 	}
 	scroll(&(data->a));
+    clear_exit(data->a);
 }

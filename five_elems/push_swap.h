@@ -79,5 +79,6 @@ void	modif_a(t_list **a, int b);
 void	scroll(t_list **a);
 int		a_moves(t_data *a, t_list *b, int c);
 int		b_moves(int a, int b);
+void    check_list(t_list *a);
 
 #endif

@@ -80,7 +80,7 @@ t_list	*check_args(t_list *list, int *arr, int len, int *flag)
 
 	i = 0;
 	*flag = 0;
-	if (check_dups(arr, len))
+	if (!arr || check_dups(arr, len))
 		return (clear_exit(list));
 	while (i < len - 1)
 	{
