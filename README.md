@@ -1,8 +1,8 @@
 # push-swap
 
-functional version of five elements sort in five_elems/
+functional version of five elements sorting algorithm in five_elems/
 
-an attempt a at a different algorythm in sort_stack/, but with poor results
+an attempt a at a different algorithm in sort_stack/, but with poor results
 
 a python script in root directory, can be used to provide a series of ints in bash, i.e.:
 
