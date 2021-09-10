@@ -40,45 +40,23 @@ long	ft_atoi(const char *num)
 	return (res);
 }
 
-int	check_dups(int *arr, int len)
+int	check_dups(t_list *list)
 {
-	int	i;
-	int	j;
+	t_list *ptr;
 
-	i = 0;
-	j = 0;
-	while (i < len)
+	list = list->next;
+	while (list)
 	{
-		while (j < i)
+		ptr = list->prev;
+		while (ptr)
 		{
-			if (arr[j] == arr[i])
+			if (ptr->num == list->num)
 				return (1);
-			j++;
+			ptr = ptr->prev;
 		}
-		j = 0;
-		i++;
-	}
-	return (0);
-}
-
-int	*get_arr(t_list *list)
-{
-	int	i;
-	int	count;
-	int	*arr;
-
-	i = 0;
-	count = lst_len(list);
-	arr = malloc(sizeof(int) * count);
-    if (!arr)
-        return (arr);
-	while (i < count)
-	{
-		arr[i] = list->num;
-		i++;
 		list = list->next;
 	}
-	return (arr);
+	return (0);
 }
 
 void    check_list(t_list *list)
@@ -94,6 +72,16 @@ void	init_data(t_data *data, t_list *st_a)
 	data->a = st_a;
 	data->b = NULL;
 	data->len = lst_len(st_a);
-	data->max = data->len;
-	data->min = 1;
+	data->min = smallest_num(st_a);
+}
+
+void print_list(t_list *list, char c)
+{
+	ft_printf("PRINTING %c\n", c);
+	while(list)
+	{
+		ft_printf("num %d\n", list->num);
+		list = list->next;
+	}
+	ft_printf("\n");
 }

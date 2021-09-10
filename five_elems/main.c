@@ -16,26 +16,22 @@ int	main(int argc, char **argv)
 {
 	t_list	*st_a;
 	t_data	data;
-	int		*arr;
 
 	if (argc <= 2)
 	{
 		if (argc == 1)
 			error_exit(1, NULL);
 		error_exit(1, argv[1]);
-		st_a = str_parse(argv[1], &arr);
+		st_a = str_parse(argv[1]);
 	}
 	else
-		st_a = parse(argv, &arr);
-	if (!st_a)
-		error_exit(0, NULL);
+		st_a = parse(argv);
 	init_data(&data, st_a);
-	sort_arr(arr, data.len);
 	if (data.len < 6)
 	{
 		minimal(&data);
 		exit(0);
 	}
-	main_sort(&data, arr);
+	main_sort(&data);
 	return (0);
 }

@@ -18,14 +18,13 @@
 # include <unistd.h>
 
 # define BIG_NUM 999999
+# define VERY_BIG_NUM 4294967295
 # define MAX 2147483647
 # define MIN -2147483648
 
 typedef struct s_list
 {
 	int				num;
-	int				order;
-	int				turn;
 	struct s_list	*next;
 	struct s_list	*prev;
 }	t_list;
@@ -47,11 +46,8 @@ typedef struct s_data
 
 int		ft_printf(const char *a, ...);
 long	ft_atoi(const char *a);
-t_list	*parse(char **a, int **b);
-t_list	*str_parse(char *a, int **b);
-int		*get_arr(t_list*a);
-void	sort_arr(int *a, int b);
-void	assign_index(t_list *a, int *b);
+t_list	*parse(char **a);
+t_list	*str_parse(char *a);
 t_list	*ft_lstnew(int a);
 void	ft_lstadd_back(t_list *a, t_list *b);
 int		lst_len(t_list *a);
@@ -65,20 +61,23 @@ void	get_val(t_list *a, t_data *b);
 void	minimal(t_data *a);
 void	init_data(t_data *a, t_list *b);
 void	init_push(t_data *a);
-void	main_sort(t_data *a, int *b);
+void	main_sort(t_data *a);
 int		check_false(char *c);
 int		str_check_false(char *str);
 void	get_nums(char *a, t_list **b);
-t_list	*clear_exit(t_list *a);
+t_list	*clear_exit(t_list *a, int b);
 void	error_exit(int a, char *b);
-t_list	*check_args(t_list *a, int *b, int c, int *d);
-int		check_dups(int *a, int b);
+t_list	*check_args(t_list *a, int *d);
+int		check_dups(t_list *a);
 int		b_moves(int a, int b);
 int		a_moves(t_data *a, t_list *b, int c);
 void	modif_a(t_list **a, int b);
-void	scroll(t_list **a);
+void	scroll(t_list **a, t_data *b);
 int		a_moves(t_data *a, t_list *b, int c);
 int		b_moves(int a, int b);
 void    check_list(t_list *a);
+int 	smallest_num(t_list *a);
+void	print_list(t_list *list, char c);
+int		sorted(t_data *data);
 
 #endif

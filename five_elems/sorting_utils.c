@@ -21,63 +21,65 @@ int	b_moves(int len, int dep)
 		b_move = dep - 1;
 	else
 		b_move = len - dep + 1;
+	// ft_printf("b_moves %d\n", b_move);
 	return (b_move);
 }
 
-int	a_moves(t_data *data, t_list *list, int order)
+int	a_moves(t_data *data, t_list *list, int num)
 {
-	int	prox;
-	int	len;
-	int	i;
-	int	dep;
+	long long	prox;
+	int			i;
+	int			dep;
+	t_list		*ptr;
 
 	dep = 0;
-	prox = data->len;
-	len = lst_len(list);
 	i = 0;
+	prox = VERY_BIG_NUM;
+	ptr = list;
 	while (list)
 	{
-		if (order - list->order > 0
-			&& order - list->order < prox)
+		if (num - list->num > 0
+			&& num - list->num < prox)
 		{
-			prox = order - list->order;
+			prox = num - list->num;
 			dep = i;
-			data->a_order = list->order;
+			data->a_order = list->num;
 		}
 		i++;
 		list = list->next;
 	}
-	return (b_moves(len, dep + 2));
+	// ft_printf("a moves len %d dep %d ", lst_len(ptr), dep);
+	return (b_moves(lst_len(ptr), dep + 2));
 }
 
-void	scroll(t_list **list)
+void	scroll(t_list **list, t_data *data)
 {
 	t_list	*ptr;
 	int		i;
 
 	ptr = *list;
 	i = 1;
-	while (ptr->order != 1)
+	while (ptr->num != data->min)
 	{
 		i++;
 		ptr = ptr->next;
 	}
 	if (i <= lst_len(*list) / 2 + 1)
-		while ((*list)->order != 1)
+		while ((*list)->num != data->min)
 			rx(list, 'a');
 	else
-		while ((*list)->order != 1)
+		while ((*list)->num != data->min)
 			rrx(list, 'a');
 }
 
-void	modif_a(t_list **list, int order)
+void	modif_a(t_list **list, int num)
 {
 	t_list	*ptr;
 	int		dep;
 
 	ptr = *list;
 	dep = 1;
-	while (ptr->order != order)
+	while (ptr->num != num)
 	{
 		ptr = ptr->next;
 		dep++;

@@ -30,10 +30,7 @@ void	ft_lstadd_back(t_list *lst, t_list *new)
 	t_list	*ptr;
 
     if (!new)
-    {
-        clear_exit(lst);
-        error_exit(0, NULL);
-    }
+		clear_exit(lst, 0);
 	ptr = lst;
 	if (ptr->next)
 		while (ptr->next)
@@ -48,6 +45,9 @@ int	lst_len(t_list *ptr)
 
 	if (!ptr)
 		return (0);
+	if (ptr->prev)
+		while (ptr->prev)
+			ptr = ptr->prev;
 	i = 0;
 	while (ptr)
 	{

@@ -24,6 +24,7 @@ int	check_false(char *str)
 		if ((str[i] >= 48 && str[i] <= 57))
 			i++;
 		else
+
 			return (1);
 	}
 	return (0);
@@ -48,8 +49,10 @@ int	str_check_false(char *str)
 	return (0);
 }
 
-t_list	*clear_exit(t_list *list)
+t_list *clear_exit(t_list *list, int flag)
 {
+	if(!list)
+		error_exit(0, NULL);
 	while (list->next)
 	{
 		list = list->next;
@@ -58,6 +61,8 @@ t_list	*clear_exit(t_list *list)
 	}
 	free(list);
 	list = NULL;
+	if (!flag)
+		error_exit(0, NULL);
 	return (list);
 }
 
@@ -74,20 +79,20 @@ void	error_exit(int flag, char *val)
 	exit(0);
 }
 
-t_list	*check_args(t_list *list, int *arr, int len, int *flag)
+t_list	*check_args(t_list *list, int *flag)
 {
-	int	i;
-
-	i = 0;
+	t_list *ptr;
+	
+	ptr = list;
 	*flag = 0;
-	if (!arr || check_dups(arr, len))
-		return (clear_exit(list));
-	while (i < len - 1)
+	if (check_dups(list))
+		clear_exit(list, 0);
+	while (ptr->next)
 	{
-		if (arr[i] > arr[i + 1])
+		if (ptr->num > ptr->next->num)
 			return (list);
-		i++;
+		ptr = ptr->next;
 	}
 	*flag = 1;
-	return (clear_exit(list));
+	return(clear_exit(list, 1));
 }
