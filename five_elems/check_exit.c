@@ -6,7 +6,7 @@
 /*   By: fmalphit <fmalphit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 17:29:42 by fmalphit          #+#    #+#             */
-/*   Updated: 2021/09/02 18:20:18 by fmalphit         ###   ########.fr       */
+/*   Updated: 2021/09/18 12:39:46 by fmalphit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	error_exit(int flag, char *val)
 	{
 		if (val && check_false(val))
 			return ;
-		ft_printf("\n");
+		exit(0);
 	}
 	else
 		ft_printf("Error\n");
